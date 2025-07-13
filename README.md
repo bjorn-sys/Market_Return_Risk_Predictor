@@ -1,168 +1,144 @@
-# Market_Return_Risk_Predictor
-
-🛒 AfriMarket Seller Risk & Fraud Detection Project
+🛒 AfriMarket Seller Risk & Return Prediction Project
 📌 Project Overview
-AfriMarket (a fictional Jumia-style platform) is experiencing record-breaking traffic, but customer satisfaction is falling due to rising complaints, fake reviews, late deliveries, and unreliable sellers.
+AfriMarket (a fictional Jumia-style e-commerce platform) is experiencing surging traffic but a drop in customer satisfaction due to issues like fake reviews, late deliveries, high return rates, and unreliable sellers. This project performs a comprehensive risk analysis and return prediction, helping AfriMarket improve operational reliability and customer trust.
 
-This data intelligence project is designed to:
+🧠 Objectives
+Clean and preprocess seller and order data.
 
-Clean and preprocess transactional data
+Identify high-risk sellers based on delivery, complaints, and return patterns.
 
-Engineer features for risk profiling
+Detect fraudulent review behaviors.
 
-Detect seller fraud using NLP and statistical techniques
+Predict return likelihood using a classification model.
 
-Build and evaluate classification models for return prediction
+Generate actionable insights and visualizations to guide policy.
 
-Recommend business actions such as seller suspension and product regulation
+🗂️ Dataset Description
+📁 jumia_jitters_dataset.csv
+The dataset contains 1,000 orders with the following key columns:
 
-📁 Dataset Summary
-Rows: 1000
+Order ID, Seller ID, Product Category
 
-Columns: 16
+Order/Dispatch/Delivery Date
 
-Source: Simulated transactional dataset including order dates, reviews, complaints, delivery info, etc.
+Customer Rating, Review Text, Complaint Code
 
-✅ Tasks and Solutions
-📌 Task 1: Data Cleaning & Feature Engineering
-Removed missing values and duplicates
+Return Flag (Yes/No), Delivery Method, Region
 
-Converted date columns to datetime
+Price, Quantity, Sentiment Score
 
-Created Delivery Delay column
+⚙️ Key Tasks Performed
+✅ 1. Data Cleaning & Engineering
+Removed missing and duplicate entries.
 
-Engineered key seller-level metrics:
+Standardized inconsistent category entries (e.g., "Fashon" → "Fashion").
 
-Average Rating
+Converted date fields to datetime.
 
-Return Rate
+Engineered:
 
-Complaint Rate
+Delivery Delay = Delivery Date - Dispatch Date
 
-Duplicate Review Flag
+Suspicious Reviews based on duplicates and reused patterns.
 
-NLP-based detection of fraudulent reviews via repetitive text patterns
+📊 2. Exploratory Data Analysis (EDA)
+Seller Risk Scoring: Combined return rate, complaint rate, and delivery delay to calculate a composite risk score.
 
-📈 Visual Insights:
-Top Sellers by Rating: Seller S050 leads with 4.15 avg rating
+Seller Ratings: Seller S050 has the highest average customer rating (4.16).
 
-Return Rate Leaders: Seller S039 has the highest at 15.3%
+Return & Complaint Rates:
 
-Complaint Trends: Health & Electronics are most flagged
+Seller S039 has the highest return rate (15%).
 
-Fraud Reviews: Identified reviews reused across products/sellers
+Seller S040 leads in complaint rate (12.5%).
 
-⚠️ Risk Score Calculation
-Weighted risk score based on:
+Regional Delivery Delays: Volta and South West regions have the highest average delivery delays.
 
-Return Rate (40%)
+Product Complaints: Electronics and Health categories had the most complaints.
 
-Complaint Rate (30%)
+📉 Visuals Used:
 
-Normalized Avg Delay (30%)
+Bar plots (Return/Complaint rates, Seller ratings)
 
-📊 Top Risky Sellers:
+Heatmaps (Complaints by product and region)
 
-plaintext
-Copy
-Edit
-Seller ID    Risk Score
-S025         0.337
-S019         0.322
-S036         0.311
-📌 Task 2: Seller Fulfillment Reliability
-Computed average delivery delays
+Delivery reliability comparisons
 
-Identified top 5 most and least reliable sellers
+Risk score ranking charts
 
-plaintext
-Copy
-Edit
-Most Reliable Sellers: S039, S004, S034, S040, S018
-Least Reliable Sellers: S010, S006, S007, S019, S003
-Region Delay Analysis: Volta region has the longest average delays
+🕵️ 3. Fraud Detection
+Flagged potentially fraudulent reviews:
 
-📌 Task 3: Return Prediction Modeling
-💡 Preprocessing
-Encoded categorical columns with OrdinalEncoder
+Reused identical reviews across products/sellers.
 
-Resampled imbalanced data with:
+Sellers with perfect 5-star ratings and high return rates were flagged (none found in this case).
 
-RandomOverSampler (Up to 1370 samples)
+🤖 4. Return Prediction Modeling
+🧪 Model Used:
+Random Forest Classifier
 
-RandomUnderSampler (Down to 32 samples)
+Tested with:
 
-🧠 Models Used
-RandomForestClassifier (base and tuned)
+Original data
 
-Hyperparameter tuning:
+Over-sampled data (RandomOverSampler)
 
-n_estimators=200, max_depth=30, min_samples_leaf=9, min_samples_split=9
+Under-sampled data (RandomUnderSampler)
 
-✅ Model Performance (Best: Oversampled + Threshold 0.3)
-Metric	Score
-Accuracy	0.92
-ROC AUC	0.95
-Precision	0.30
-Recall	1.00
-F1 Score	0.46
+🔍 Model Evaluation:
+Tuned hyperparameters (n_estimators=200, max_depth=30, etc.)
 
-Why Recall? Catching all true returns is more critical than minimizing false alarms.
+ROC AUC: 0.95
 
-📌 Task 4: Final Business Recommendations
-🔎 Sellers to Suspend or Audit
-Based on top 5 Risk Scores:
+Recall: 0.83 (High — captures most returns)
 
-plaintext
-Copy
-Edit
-Seller ID  Risk Score  Avg Delay
-S010       0.300       5.88 days
-S019       0.299       5.55 days
-S025       0.290       5.00 days
-🚫 Products to Regulate or Blacklist
-Based on volume of complaints:
+Precision: 0.26 (Trade-off for higher recall)
 
-plaintext
-Copy
-Edit
-Electronics
-Health
-Toys
-📦 Model Deployment
-Final model saved as jumia.pkl for integration into applications or Streamlit dashboards.
+F1 Score: 0.40
+
+Cross-Validation Accuracy: ~98% average across 5 folds
+
+🚨 Risk Insights & Business Recommendations
+🧑‍💼 Sellers to Investigate or Suspend
+Based on highest risk scores:
+
+S010, S019, S025, S006, S007
+
+🛑 Products to Regulate or Blacklist
+Electronics, Health, Toys (highest complaints)
+
+⚙️ Strategies to Reduce Delivery Delays:
+Warehouse Rebalancing — Reduce load from Lagos hub.
+
+Seller SLAs — Penalize breach of max delivery times.
+
+Regional Optimization — Add capacity to high-traffic zones.
+
+Real-Time Order Routing — Use the model to avoid risky sellers.
+
+💾 Deployment
+The final model was saved using pickle:
 
 python
 Copy
 Edit
 import pickle
 pickle.dump(model, open('jumia.pkl', 'wb'))
-📊 Statistical Test: Delivery Method vs Customer Rating
-Used ANOVA to test impact of delivery method on customer rating
+Can be integrated into a Streamlit or Flask API for real-time return prediction and seller flagging.
 
-Result: No statistically significant effect (p = 0.536)
+📈 Tools & Technologies
+Python, Pandas, NumPy
 
-💡 Key Insights
-High return rates often correlate with delayed deliveries and increased complaints.
+Matplotlib, Seaborn
 
-Duplicate and cross-seller reviews are strong indicators of fraudulent behavior.
+Scikit-learn, RandomForest, Imbalanced-learn
 
-Certain regions (e.g., Volta) experience chronic delivery delays.
+Statistical Testing (ANOVA)
 
-Recall is the preferred evaluation metric due to the business need to capture all high-risk returns.
+Jupyter Notebook
 
-🔗 Technologies Used
-Python (Pandas, Numpy, Scikit-learn, RandomForestClassifier, Seaborn, Matplotlib)
-
-Imbalanced-learn (RandomOverSampler, RandomUnderSampler)
-
-NLP techniques for fraud review detection
-
-Statistical testing (ANOVA)
-
-Model persistence (Pickle)
-
-🧠 Author
-Emmanuel Bjorn
-Data Intelligence Officer | eCommerce Analyst | Fraud Detection Specialist
+📬 Contact
+Author: Emmanuel Bjorn
+📧 [emmanuelekuonye948@gmail.com.com]
+💼 [LinkedIn Profile](https://www.linkedin.com/in/ekuonye-chinonso-emmanuel-bb2041208/)
 
