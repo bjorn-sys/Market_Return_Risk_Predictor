@@ -152,7 +152,7 @@ Certain regions (e.g., Volta) experience chronic delivery delays.
 Recall is the preferred evaluation metric due to the business need to capture all high-risk returns.
 
 🔗 Technologies Used
-Python (Pandas, Numpy, Scikit-learn, XGBoost, Seaborn, Matplotlib)
+Python (Pandas, Numpy, Scikit-learn, RandomForestClassifier, Seaborn, Matplotlib)
 
 Imbalanced-learn (RandomOverSampler, RandomUnderSampler)
 
