@@ -1,7 +1,7 @@
  # Project Overview
-`AfriMarket` (a fictional eCommerce platform similar to Jumia) is facing major operational challenges—ranging from fake reviews and product complaints to seller non-fulfillment and high product return rates. This project is designed to detect risky sellers, flag fraudulent behavior, and recommend policy actions to improve customer experience and platform trust.
-
-📂 Dataset Summary
+**AfriMarket** (a fictional eCommerce platform similar to Jumia) is facing major operational challenges—ranging from fake reviews and product complaints to seller non-fulfillment and high product return rates. This project is designed to detect risky sellers, flag fraudulent behavior, and recommend policy actions to improve customer experience and platform trust.
+---
+# 📂 Dataset Summary
 Source: jumia_jitters_dataset.csv
 Rows: 1000
 Columns: 16
@@ -14,8 +14,8 @@ Delivery & Dispatch Dates
 Customer Rating, Review Text, Sentiment Score
 
 Return Flag, Complaint Code, Delivery Method
-
-🧹 Data Cleaning & Preparation
+---
+# 🧹 Data Cleaning & Preparation
 Handled missing values (dropna)
 
 Parsed date fields to datetime
@@ -25,8 +25,8 @@ Fixed inconsistent categories (e.g., "Lag" → "Lagos")
 Rounded Sentiment Score to 2 decimals
 
 Flagged duplicate reviews and review text anomalies
-
-🛠 Feature Engineering
+---
+# 🛠 Feature Engineering
 Delivery Delay: Delivery Date - Dispatch Date
 
 Return Rate / Complaint Rate / Avg Delivery Delay per seller
@@ -34,14 +34,14 @@ Return Rate / Complaint Rate / Avg Delivery Delay per seller
 Suspicious Review Detection using repetitive cross-product/seller reviews
 
 Seller Risk Score = 40% Return Rate + 30% Complaint Rate + 30% Normalized Delay
-
-📊 Key Insights & Analysis
-✅ Top Sellers by Reliability
+---
+# 📊 Key Insights & Analysis
+# ✅ Top Sellers by Reliability
 Sellers like S039 and S041 had 0% return rate — potentially excellent or suspicious.
 
 Most Reliable Sellers (lowest avg delay): S039, S034, S040
-
-❌ Least Reliable Sellers
+---
+# ❌ Least Reliable Sellers
 S010, S019, S025 had delivery delays over 5 days and high risk scores.
 
 🔥 Sellers with Highest Risk Scores
@@ -49,16 +49,16 @@ Seller	Risk Score	Return Rate	Complaint Rate	Avg Delay
 S025	0.34	11.7%	11.7%	5 days
 S019	0.32	5.6%	5.6%	5.5 days
 S036	0.31	14.3%	7.1%	4.6 days
-
-🚩 Fraudulent Review Detection
+---
+# 🚩 Fraudulent Review Detection
 All reviews were highly duplicated and repeated across multiple sellers/categories — indicating possible fake review campaigns.
-
-🧪 Hypothesis Testing
+---
+# 🧪 Hypothesis Testing
 ANOVA Test on Delivery Method vs Customer Rating:
 
 P-value = 0.53 — No significant difference. Delivery method does not influence customer satisfaction statistically.
-
-🧠 Machine Learning: Return Prediction
+---
+# 🧠 Machine Learning: Return Prediction
 Target: Predict if a product will be returned (Return Flag)
 Model Used: Random Forest Classifier
 Steps:
@@ -82,9 +82,8 @@ Recall: 83% (Important for minimizing undetected returns)
 ROC AUC: 0.95
 
 ✅ Emphasis on Recall ensures we correctly identify risky/return-prone transactions.
-
-🔍 Business Recommendations
-📈 Business Recommendations
+---
+# 📈 Business Recommendations
 1. 🚫 Seller Enforcement & Marketplace Hygiene
 Immediate Suspension or Review of top high-risk sellers (e.g., S025, S019, S036).
 
