@@ -84,14 +84,14 @@ ROC AUC: 0.95
 ✅ Emphasis on Recall ensures we correctly identify risky/return-prone transactions.
 ---
 # 📈 Business Recommendations
-1. 🚫 Seller Enforcement & Marketplace Hygiene
+**1. 🚫 Seller Enforcement & Marketplace Hygiene**
 Immediate Suspension or Review of top high-risk sellers (e.g., S025, S019, S036).
 
 Quarterly Risk Audits based on dynamic Seller Risk Score (delay, complaints, returns).
 
 Require Performance Improvement Plans (PIPs) for underperforming sellers before relisting.
 
-2. ⚖️ Product Category Regulations
+**2. ⚖️ Product Category Regulations**
 High Complaint Categories (e.g., Electronics, Health, Toys) should undergo:
 
 Mandatory product quality inspections
@@ -100,7 +100,7 @@ Third-party certification for high-risk items (e.g., health-related products)
 
 Prioritize sellers with verified sourcing and fulfillment
 
-3. 🔍 Fake Review Detection System
+**3. 🔍 Fake Review Detection System**
 Deploy a review moderation engine using:
 
 NLP-based duplicate detection
@@ -111,7 +111,7 @@ Cross-product/seller review anomaly flagging
 
 Reward customers who report suspicious reviews
 
-4. ⏱️ Fulfillment Reliability Policy
+**4. ⏱️ Fulfillment Reliability Policy**
 Set maximum delivery delay thresholds by category (e.g., 3 days for electronics).
 
 Penalize sellers for:
@@ -122,7 +122,7 @@ Frequent returns/complaints due to delivery
 
 Introduce Fulfillment Performance Score to boost seller visibility
 
-5. 📦 Return Risk Prevention System
+**5. 📦 Return Risk Prevention System**
 Integrate the ML Return Prediction Model into the backend to:
 
 Flag likely-return orders in real-time
@@ -131,7 +131,7 @@ Trigger alerts for manual quality check or delivery reassignment
 
 Offer optional return protection packages to customers
 
-6. 🧪 Monitoring & A/B Testing
+**6. 🧪 Monitoring & A/B Testing**
 Continuously test:
 
 Impact of delivery method on customer satisfaction
@@ -140,20 +140,20 @@ Effects of suspending risky sellers on return/complaint trends
 
 Use dashboards to monitor seller trends, sentiment shifts, and complaint hot zones
 
-7. 🤝 Customer Trust Programs
+**7. 🤝 Customer Trust Programs**
 Highlight "Top Trusted Sellers" with badges (based on low risk scores & timely delivery)
 
 Offer extended warranties and fast refunds for risky categories
 
 Educate customers on how to identify trusted sellers and genuine reviews
 
-⚠️ Product Regulation Needed
+**⚠️ Product Regulation Needed**
 Category	Complaint Count
 Electronics	6
 Health	3
 Toys	3
 
-These categories attract excessive customer complaints and require:
+**These categories attract excessive customer complaints and require:**
 
 Supplier audits
 
@@ -161,15 +161,15 @@ Warranty checks
 
 Enhanced QC standards
 
-🤖 Implement NLP Filters
+**🤖 Implement NLP Filters**
 Flag repetitive reviews
 
 Detect review duplication across categories/sellers
 
 🛠 Model Deployment
 The model is exported as a .pkl file for integration into a fraud detection or return prevention system.
-
-📎 Technologies Used
+---
+# 📎 Technologies Used
 Python, Pandas, Numpy
 
 Matplotlib, Seaborn
@@ -179,5 +179,8 @@ Scikit-learn, XGBoost, Imbalanced-learn
 Statistical Testing (ANOVA)
 
 Data Cleaning & Engineering
+---
+# DEPLOYMENT
+ Network URL: http://172.19.183.243:8501
 
 Machine Learning with Sampling Strategies
