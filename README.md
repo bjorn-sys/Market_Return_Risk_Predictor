@@ -75,11 +75,11 @@ Hyperparameter tuning (n_estimators=200, max_depth=30, etc.)
 
 Best Model Performance (Over-Sampled Data):
 
-Accuracy: 91%
+Accuracy: 98%
 
-Recall: 83% (Important for minimizing undetected returns)
+Recall: 75% (Important for minimizing undetected returns)
 
-ROC AUC: 0.95
+ROC AUC: 0.87
 
 ✅ Emphasis on Recall ensures we correctly identify risky/return-prone transactions.
 ---
