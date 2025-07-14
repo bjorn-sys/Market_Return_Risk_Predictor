@@ -1,144 +1,184 @@
-🛒 AfriMarket Seller Risk & Return Prediction Project
-📌 Project Overview
-AfriMarket (a fictional Jumia-style e-commerce platform) is experiencing surging traffic but a drop in customer satisfaction due to issues like fake reviews, late deliveries, high return rates, and unreliable sellers. This project performs a comprehensive risk analysis and return prediction, helping AfriMarket improve operational reliability and customer trust.
+ # Project Overview
+`AfriMarket` (a fictional eCommerce platform similar to Jumia) is facing major operational challenges—ranging from fake reviews and product complaints to seller non-fulfillment and high product return rates. This project is designed to detect risky sellers, flag fraudulent behavior, and recommend policy actions to improve customer experience and platform trust.
 
-🧠 Objectives
-Clean and preprocess seller and order data.
-
-Identify high-risk sellers based on delivery, complaints, and return patterns.
-
-Detect fraudulent review behaviors.
-
-Predict return likelihood using a classification model.
-
-Generate actionable insights and visualizations to guide policy.
-
-🗂️ Dataset Description
-📁 jumia_jitters_dataset.csv
-The dataset contains 1,000 orders with the following key columns:
+📂 Dataset Summary
+Source: jumia_jitters_dataset.csv
+Rows: 1000
+Columns: 16
+Core Fields:
 
 Order ID, Seller ID, Product Category
 
-Order/Dispatch/Delivery Date
+Delivery & Dispatch Dates
 
-Customer Rating, Review Text, Complaint Code
+Customer Rating, Review Text, Sentiment Score
 
-Return Flag (Yes/No), Delivery Method, Region
+Return Flag, Complaint Code, Delivery Method
 
-Price, Quantity, Sentiment Score
+🧹 Data Cleaning & Preparation
+Handled missing values (dropna)
 
-⚙️ Key Tasks Performed
-✅ 1. Data Cleaning & Engineering
-Removed missing and duplicate entries.
+Parsed date fields to datetime
 
-Standardized inconsistent category entries (e.g., "Fashon" → "Fashion").
+Fixed inconsistent categories (e.g., "Lag" → "Lagos")
 
-Converted date fields to datetime.
+Rounded Sentiment Score to 2 decimals
 
-Engineered:
+Flagged duplicate reviews and review text anomalies
 
-Delivery Delay = Delivery Date - Dispatch Date
+🛠 Feature Engineering
+Delivery Delay: Delivery Date - Dispatch Date
 
-Suspicious Reviews based on duplicates and reused patterns.
+Return Rate / Complaint Rate / Avg Delivery Delay per seller
 
-📊 2. Exploratory Data Analysis (EDA)
-Seller Risk Scoring: Combined return rate, complaint rate, and delivery delay to calculate a composite risk score.
+Suspicious Review Detection using repetitive cross-product/seller reviews
 
-Seller Ratings: Seller S050 has the highest average customer rating (4.16).
+Seller Risk Score = 40% Return Rate + 30% Complaint Rate + 30% Normalized Delay
 
-Return & Complaint Rates:
+📊 Key Insights & Analysis
+✅ Top Sellers by Reliability
+Sellers like S039 and S041 had 0% return rate — potentially excellent or suspicious.
 
-Seller S039 has the highest return rate (15%).
+Most Reliable Sellers (lowest avg delay): S039, S034, S040
 
-Seller S040 leads in complaint rate (12.5%).
+❌ Least Reliable Sellers
+S010, S019, S025 had delivery delays over 5 days and high risk scores.
 
-Regional Delivery Delays: Volta and South West regions have the highest average delivery delays.
+🔥 Sellers with Highest Risk Scores
+Seller	Risk Score	Return Rate	Complaint Rate	Avg Delay
+S025	0.34	11.7%	11.7%	5 days
+S019	0.32	5.6%	5.6%	5.5 days
+S036	0.31	14.3%	7.1%	4.6 days
 
-Product Complaints: Electronics and Health categories had the most complaints.
+🚩 Fraudulent Review Detection
+All reviews were highly duplicated and repeated across multiple sellers/categories — indicating possible fake review campaigns.
 
-📉 Visuals Used:
+🧪 Hypothesis Testing
+ANOVA Test on Delivery Method vs Customer Rating:
 
-Bar plots (Return/Complaint rates, Seller ratings)
+P-value = 0.53 — No significant difference. Delivery method does not influence customer satisfaction statistically.
 
-Heatmaps (Complaints by product and region)
+🧠 Machine Learning: Return Prediction
+Target: Predict if a product will be returned (Return Flag)
+Model Used: Random Forest Classifier
+Steps:
 
-Delivery reliability comparisons
+Ordinal encoding for categorical data
 
-Risk score ranking charts
+Handled class imbalance using:
 
-🕵️ 3. Fraud Detection
-Flagged potentially fraudulent reviews:
+Random OverSampler
 
-Reused identical reviews across products/sellers.
+Random UnderSampler
 
-Sellers with perfect 5-star ratings and high return rates were flagged (none found in this case).
+Hyperparameter tuning (n_estimators=200, max_depth=30, etc.)
 
-🤖 4. Return Prediction Modeling
-🧪 Model Used:
-Random Forest Classifier
+Best Model Performance (Over-Sampled Data):
 
-Tested with:
+Accuracy: 91%
 
-Original data
-
-Over-sampled data (RandomOverSampler)
-
-Under-sampled data (RandomUnderSampler)
-
-🔍 Model Evaluation:
-Tuned hyperparameters (n_estimators=200, max_depth=30, etc.)
+Recall: 83% (Important for minimizing undetected returns)
 
 ROC AUC: 0.95
 
-Recall: 0.83 (High — captures most returns)
+✅ Emphasis on Recall ensures we correctly identify risky/return-prone transactions.
 
-Precision: 0.26 (Trade-off for higher recall)
+🔍 Business Recommendations
+📈 Business Recommendations
+1. 🚫 Seller Enforcement & Marketplace Hygiene
+Immediate Suspension or Review of top high-risk sellers (e.g., S025, S019, S036).
 
-F1 Score: 0.40
+Quarterly Risk Audits based on dynamic Seller Risk Score (delay, complaints, returns).
 
-Cross-Validation Accuracy: ~98% average across 5 folds
+Require Performance Improvement Plans (PIPs) for underperforming sellers before relisting.
 
-🚨 Risk Insights & Business Recommendations
-🧑‍💼 Sellers to Investigate or Suspend
-Based on highest risk scores:
+2. ⚖️ Product Category Regulations
+High Complaint Categories (e.g., Electronics, Health, Toys) should undergo:
 
-S010, S019, S025, S006, S007
+Mandatory product quality inspections
 
-🛑 Products to Regulate or Blacklist
-Electronics, Health, Toys (highest complaints)
+Third-party certification for high-risk items (e.g., health-related products)
 
-⚙️ Strategies to Reduce Delivery Delays:
-Warehouse Rebalancing — Reduce load from Lagos hub.
+Prioritize sellers with verified sourcing and fulfillment
 
-Seller SLAs — Penalize breach of max delivery times.
+3. 🔍 Fake Review Detection System
+Deploy a review moderation engine using:
 
-Regional Optimization — Add capacity to high-traffic zones.
+NLP-based duplicate detection
 
-Real-Time Order Routing — Use the model to avoid risky sellers.
+Sentiment analysis + keyword filtering
 
-💾 Deployment
-The final model was saved using pickle:
+Cross-product/seller review anomaly flagging
 
-python
-Copy
-Edit
-import pickle
-pickle.dump(model, open('jumia.pkl', 'wb'))
-Can be integrated into a Streamlit or Flask API for real-time return prediction and seller flagging.
+Reward customers who report suspicious reviews
 
-📈 Tools & Technologies
-Python, Pandas, NumPy
+4. ⏱️ Fulfillment Reliability Policy
+Set maximum delivery delay thresholds by category (e.g., 3 days for electronics).
+
+Penalize sellers for:
+
+Exceeding delay thresholds
+
+Frequent returns/complaints due to delivery
+
+Introduce Fulfillment Performance Score to boost seller visibility
+
+5. 📦 Return Risk Prevention System
+Integrate the ML Return Prediction Model into the backend to:
+
+Flag likely-return orders in real-time
+
+Trigger alerts for manual quality check or delivery reassignment
+
+Offer optional return protection packages to customers
+
+6. 🧪 Monitoring & A/B Testing
+Continuously test:
+
+Impact of delivery method on customer satisfaction
+
+Effects of suspending risky sellers on return/complaint trends
+
+Use dashboards to monitor seller trends, sentiment shifts, and complaint hot zones
+
+7. 🤝 Customer Trust Programs
+Highlight "Top Trusted Sellers" with badges (based on low risk scores & timely delivery)
+
+Offer extended warranties and fast refunds for risky categories
+
+Educate customers on how to identify trusted sellers and genuine reviews
+
+⚠️ Product Regulation Needed
+Category	Complaint Count
+Electronics	6
+Health	3
+Toys	3
+
+These categories attract excessive customer complaints and require:
+
+Supplier audits
+
+Warranty checks
+
+Enhanced QC standards
+
+🤖 Implement NLP Filters
+Flag repetitive reviews
+
+Detect review duplication across categories/sellers
+
+🛠 Model Deployment
+The model is exported as a .pkl file for integration into a fraud detection or return prevention system.
+
+📎 Technologies Used
+Python, Pandas, Numpy
 
 Matplotlib, Seaborn
 
-Scikit-learn, RandomForest, Imbalanced-learn
+Scikit-learn, XGBoost, Imbalanced-learn
 
 Statistical Testing (ANOVA)
 
-Jupyter Notebook
+Data Cleaning & Engineering
 
-📬 Contact
-Author: Emmanuel Bjorn
-📧 [emmanuelekuonye948@gmail.com.com]
-💼 [LinkedIn Profile](https://www.linkedin.com/in/ekuonye-chinonso-emmanuel-bb2041208/)
-
+Machine Learning with Sampling Strategies
